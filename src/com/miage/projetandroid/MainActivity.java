@@ -2,21 +2,26 @@ package com.miage.projetandroid;
 
 import java.io.IOException;
 
-import com.miage.projetandroid.controller.ParametreController;
+import com.miage.projetandroid.controller.controlModel.ParametreController;
 import com.miage.projetandroid.model.Parametre;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
 	 private ParametreController paramController;
-	 private TextView displayJson;
+	 private TextView titreApplication;
+	 private ImageView logo;
+	 private LinearLayout barreTitre;
 	    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,31 +29,33 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 		
 		paramController = new ParametreController();
-		displayJson = (TextView) findViewById(R.id.textView1);
+		titreApplication = (TextView) findViewById(R.id.titre_application);
+		logo = (ImageView) findViewById(R.id.logo);
+		barreTitre = (LinearLayout) findViewById(R.id.barreTitre);
 		
-	    Button startParsing = (Button) findViewById(R.id.button1);
+	  /*  Button startParsing = (Button) findViewById(R.id.button1);
 	    startParsing.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				gettingJson();	
-			}
-		});
+		*/
+		gettingJson();	
+		/*	}
+		});*/
     }
     
     final void gettingJson() {
         final Thread checkUpdate = new Thread() {
             public void run() {
-            Parametre p = paramController.init();
-            final StringBuilder str = new StringBuilder("param : ");
-            str.append("\n").append("font : ").append(p.getFont());
-            str.append("\n").append("taille : ").append(p.getTaille());
-            str.append("\n").append("couleur : ").append(p.getCouleur());
-            str.append("\n").append("couleur bouton : ").append(p.getCouleur_bouton());
+            final Parametre p = paramController.init();
             runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        displayJson.setText(str.toString());
+                    	barreTitre.setBackgroundColor(0xFF3C3B8E);
+                    	titreApplication.setText(p.getTitreApplication());
+                        titreApplication.setTextSize(p.getTaille());
+                        titreApplication.setTextColor(0xFFE9EEF2);                       
+                        
                     }
                 });
 
