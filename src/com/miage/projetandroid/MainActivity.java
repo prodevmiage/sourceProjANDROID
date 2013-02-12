@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
 	 private TextView titreApplication;
 	 private ImageView logo;
 	 private LinearLayout barreTitre;
+	 private LinearLayout barreRecherche;
 	    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,8 @@ public class MainActivity extends Activity {
 		paramController = new ParametreController();
 		titreApplication = (TextView) findViewById(R.id.titre_application);
 		logo = (ImageView) findViewById(R.id.logo);
-		barreTitre = (LinearLayout) findViewById(R.id.barreTitre);
-		
+		barreTitre = (LinearLayout) findViewById(R.id.layoutBarreTitre);
+		barreRecherche = (LinearLayout) findViewById(R.id.layoutBarreRecherche);
 	  /*  Button startParsing = (Button) findViewById(R.id.button1);
 	    startParsing.setOnClickListener(new OnClickListener() {
 			
@@ -52,10 +53,10 @@ public class MainActivity extends Activity {
                     @Override
                     public void run() {
                     	barreTitre.setBackgroundColor(0xFF3C3B8E);
+                    	barreRecherche.setBackgroundColor(0xFF3C3B8E);
                     	titreApplication.setText(p.getTitreApplication());
                         titreApplication.setTextSize(p.getTaille());
-                        titreApplication.setTextColor(0xFFE9EEF2);                       
-                        
+                        titreApplication.setTextColor(0xFFE9EEF2);                               
                     }
                 });
 

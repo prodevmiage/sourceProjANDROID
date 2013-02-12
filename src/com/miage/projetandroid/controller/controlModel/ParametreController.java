@@ -16,7 +16,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.miage.projetandroid.model.Parametre;
 
-public class ParametreController {
+public class ParametreController extends WebService{
 	//variable contenant l'url sur laquelle on a déposé notre fichier
 	private static final String DL_URL = "http://prodevmiage.netii.net/clienttest/reglages.json";
 	
@@ -34,7 +34,7 @@ public class ParametreController {
     
     public Parametre init() {
         try{
-        	contenuFic = httpGetMethod();
+        	contenuFic = httpGetMethod(DL_URL);
             jp = jsonFactory.createJsonParser(contenuFic);
             param = objectMapper.readValue(jp, Parametre.class);
         } catch(JsonParseException e) {
@@ -45,35 +45,8 @@ public class ParametreController {
             e.printStackTrace();
         }
         return param.getParam();
+    
     }
-
-	private String httpGetMethod() throws ClientProtocolException, IOException {
-			
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(DL_URL);	         
-		HttpResponse httpResponse = httpClient.execute(httpGet);
-		return getJsonResponse(httpResponse);
-	}
-	
-	
-	protected static String getJsonResponse(HttpResponse httpResponse) throws IOException{
-
-		StringBuffer stringBuffer = new StringBuffer("");
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
-		String lineBuffer = bufferedReader.readLine();
-
-		while(lineBuffer !=null)
-		{
-			stringBuffer.append(lineBuffer);
-			stringBuffer.append(" ");
-			lineBuffer = bufferedReader.readLine();
-		}
-
-		bufferedReader.close();
-
-		return stringBuffer.toString();
-	}
-
 	
 	public Parametre getParam(){
 		return param;
