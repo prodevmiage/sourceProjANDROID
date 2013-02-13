@@ -1,4 +1,4 @@
-package com.miage.projetandroid.controller;
+package com.miage.projetandroid.persistance;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

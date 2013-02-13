@@ -1,4 +1,4 @@
-package com.miage.projetandroid.controller.controlModel;
+package com.miage.projetandroid.persistance;
 
 import java.io.BufferedReader;
 import java.io.IOException;

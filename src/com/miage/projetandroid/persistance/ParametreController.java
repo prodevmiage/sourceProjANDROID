@@ -1,14 +1,8 @@
-package com.miage.projetandroid.controller.controlModel;
+package com.miage.projetandroid.persistance;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.JsonParser;
@@ -18,7 +12,7 @@ import com.miage.projetandroid.model.Parametre;
 
 public class ParametreController extends WebService{
 	//variable contenant l'url sur laquelle on a déposé notre fichier
-	private static final String DL_URL = "http://prodevmiage.netii.net/clienttest/reglages.json";
+	private static final String DL_URL_PARAMETRE = "http://prodevmiage.netii.net/BaseDonnees/reglages.json";
 	
 	public String contenuFic = "";
 	
@@ -32,9 +26,9 @@ public class ParametreController extends WebService{
         jsonFactory = new JsonFactory();
     }
     
-    public Parametre init() {
+    public Parametre initParametre() {
         try{
-        	contenuFic = httpGetMethod(DL_URL);
+        	contenuFic = httpGetMethod(DL_URL_PARAMETRE);
             jp = jsonFactory.createJsonParser(contenuFic);
             param = objectMapper.readValue(jp, Parametre.class);
         } catch(JsonParseException e) {
@@ -45,10 +39,9 @@ public class ParametreController extends WebService{
             e.printStackTrace();
         }
         return param.getParam();
-    
     }
-	
-	public Parametre getParam(){
-		return param;
-	}
+    
+    public void majBDD_Parametre(){
+    	
+    }
 }
