@@ -3,32 +3,38 @@ package com.miage.projetandroid.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.miage.projetandroid.R;
+import com.miage.projetandroid.controller.EvenementAdapter;
+import com.miage.projetandroid.controller.EvenementAdapter.EvenementAdapterListener;
 import com.miage.projetandroid.model.Evenement;
 import com.miage.projetandroid.model.Parametre;
 import com.miage.projetandroid.persistance.EvenementController;
 import com.miage.projetandroid.persistance.ParametreController;
 import com.miage.projetandroid.persistance.TypeEvenementController;
 import com.miage.projetandroid.persistance.ZoneController;
+import com.miage.projetandroid.util.Constante;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.ListActivity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements EvenementAdapterListener{
 
 	 private LinearLayout layoutApplication;
 	 private ParametreController paramController;
@@ -41,12 +47,10 @@ public class MainActivity extends Activity {
 	 private LinearLayout fondEcran;
 	 private ImageButton boutonHome;
 	 private ImageButton boutonRecherche;
-	 private ToggleButton boutonHorsLigne;
 	 private ListView listeViewEvtAlaUne;
-	 private Parametre paramApplication;
-	 ArrayList<HashMap<String, String>> listItemEvtAlaUne = new ArrayList<HashMap<String, String>>();	    
-    
-	 @Override
+	 private Parametre param = new Parametre();
+    	 
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -57,46 +61,45 @@ public class MainActivity extends Activity {
 		zoneController = new ZoneController();
 		typeEvtController = new TypeEvenementController();
 		
-		//Initialisation des composants d'écran
+		//Initialisation des composants d'√©cran
 		layoutApplication = (LinearLayout) findViewById(R.id.layoutApplication);
 		titreApplication = (TextView) findViewById(R.id.titre_application);
 		logo = (ImageView) findViewById(R.id.logo);
 		barreTitre = (LinearLayout) findViewById(R.id.layoutBarreTitre);
 		fondEcran = (LinearLayout) findViewById(R.id.layoutApplication);
 		boutonHome = (ImageButton) findViewById(R.id.boutonHome);
-		boutonHorsLigne = (ToggleButton) findViewById(R.id.boutonHorsLigne);
 		boutonRecherche = (ImageButton) findViewById(R.id.boutonAccesRecherche);
-		listeViewEvtAlaUne = (ListView) findViewById(R.id.listeEvenementUne);
 		
-		//gère l'évènement déclenché au click sur le bouton home
-	    // cela provoque la récupération des données et l'affichage de la page home
+		//g√®re l'√©v√®nement d√©clench√© au click sur le bouton home
+	    // cela provoque la r√©cup√©ration des donn√©es et l'affichage de la page home
 		boutonHome.setOnClickListener(new OnClickListener() { 
 			public void onClick(View v) { gettingJson(); } 
 		});
-		
-		//lancement de la récupération des données
+				
+		//lancement de la r√©cup√©ration des donn√©es
 		gettingJson();
     }
 			
-    //fonction permettant de récupérer les données contenues dans les fichiers Json
+    //fonction permettant de r√©cup√©rer les donn√©es contenues dans les fichiers Json
     final void gettingJson() {
         final Thread checkUpdate = new Thread() {
             public void run() {
-            	final Parametre p = paramController.initParametre();
+            	param = paramController.initParametre();
             	final ArrayList<Evenement> listeEvt = evtController.initEvenement();
+            	
             	runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                    	parametreComposant(p);
+                    	parametreComposant(param);
                     	gestionAffichageEvenementAlaUne(listeEvt);
                     }
                 });
             }
         };
         checkUpdate.start();
-        }
+    }
     
-    //fonction qui permet de paramètrer l'application
+    //fonction qui permet de param√©trer l'application
 	private void parametreComposant(Parametre p) {
 		barreTitre.setBackgroundColor(Color.parseColor(p.getCouleur_barreTitre()));
     	fondEcran.setBackgroundColor(Color.parseColor(p.getCouleur_fond()));
@@ -108,27 +111,25 @@ public class MainActivity extends Activity {
 	}
 	
 	private void gestionAffichageEvenementAlaUne(ArrayList<Evenement> listeEvt) {
+		ArrayList<Evenement> listEvtAlaUne = new ArrayList<Evenement>();
 		
-		//On déclare la HashMap qui contiendra les informations pour un item
-		HashMap<String, String> map;
+		//Cr√©ation et initialisation de l'Adapter pour les √©v√®nements
+	    for(Evenement e:listeEvt){
+	    	if(e.getPublication() == 1){
+	    		listEvtAlaUne.add(e);
+	    	}
+	    }
 		
-		//liste évènement à afficher, on parcours la liste des évènements et on affiche uniquement les actualités
-		for(int i = 0; i < listeEvt.size(); i++){
-			//if(listeEvt.get(i).getIdTypeEvt()==6){
-				//Création d'une HashMap pour insérer les informations du premier item de notre listView
-				map = new HashMap<String, String>();
-				map.put("titre", listeEvt.get(i).getNom());
-				map.put("description", listeEvt.get(i).getDescription());
-				listItemEvtAlaUne.add(map);
-			//}
-		}
-		//Création d'un SimpleAdapter qui se chargera de mettre les items présents dans notre list (listItem) dans la vue
-		SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), listItemEvtAlaUne,
-				R.layout.affichageitemhome,	new String[] {"titre", "description"}, 
-				new int[] {R.id.titre, R.id.description});
-	
-		//On attribue à notre listView l'adapter que l'on vient de créer
-		listeViewEvtAlaUne.setAdapter(mSchedule);
+		EvenementAdapter adapter = new EvenementAdapter(this, listeEvt);
+	     
+		//Ecoute des √©v√®nements sur la liste
+	    adapter.addListener(this);
+		
+	    //R√©cup√©ration du composant ListView
+		listeViewEvtAlaUne = (ListView) findViewById(R.id.listeEvenementUne);
+	        
+	    //Initialisation de la liste avec les donn√©es
+		listeViewEvtAlaUne.setAdapter(adapter);
 	}
     
     @Override
@@ -137,4 +138,53 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
+
+	@Override
+	public void onClickEvenement(Evenement item, int position) {
+		Intent intent = new Intent(MainActivity.this, FicheDescEvenementActivity.class);
+		Bundle evenementBundle = new Bundle();
+		//mapping dans un objet bundle des information sur l'√©v√®nement s√©lectionn√©
+		evenementBundle.putInt(Constante.EXTRA_EVT_ID, item.getId());
+		evenementBundle.putString(Constante.EXTRA_EVT_NOM, item.getNom());
+		evenementBundle.putString(Constante.EXTRA_EVT_DESCRIPTION, item.getDescription());
+		evenementBundle.putInt(Constante.EXTRA_EVT_PUBLICATION, item.getPublication());
+		evenementBundle.putInt(Constante.EXTRA_EVT_IDTYPEEVT, item.getIdTypeEvt());
+		evenementBundle.putString(Constante.EXTRA_EVT_LOCALISATION, item.getLocalisation());
+		evenementBundle.putString(Constante.EXTRA_EVT_POSITIONGPS, item.getPositionGPS());
+		evenementBundle.putInt(Constante.EXTRA_EVT_IDZONE, item.getIdZone());
+		evenementBundle.putString(Constante.EXTRA_EVT_CONTACT_TEL, item.getContact_tel());
+		evenementBundle.putString(Constante.EXTRA_EVT_CONTACT_MAIL, item.getContact_mail());
+		evenementBundle.putString(Constante.EXTRA_EVT_INFOCONTACT, item.getInfoContact());
+		evenementBundle.putString(Constante.EXTRA_EVT_WEB, item.getWeb());
+		evenementBundle.putString(Constante.EXTRA_EVT_NATURE, item.getNature());
+		evenementBundle.putString(Constante.EXTRA_EVT_TARIF, item.getTarif());
+		evenementBundle.putString(Constante.EXTRA_EVT_PHOTO, item.getPhoto());
+		
+		Bundle parametreBundle = new Bundle();
+		//mapping dans un objet bundle des informations sur le param√©trage de l'application
+		parametreBundle.putString(Constante.EXTRA_PARAM_FONTTITRE, param.getFontTitre());
+		parametreBundle.putString(Constante.EXTRA_PARAM_FONTTEXTE, param.getFontTexte());
+		parametreBundle.putInt(Constante.EXTRA_PARAM_TAILLEPOLICETITRE, param.getTaillePoliceTitre());
+		parametreBundle.putInt(Constante.EXTRA_PARAM_TAILLEPOLICETEXTE, param.getTaillePoliceTexte());
+		parametreBundle.putString(Constante.EXTRA_PARAM_COULEUR_BARRETITRE, param.getCouleur_barreTitre());
+		parametreBundle.putString(Constante.EXTRA_PARAM_COULEUR_FOND, param.getCouleur_fond());
+		parametreBundle.putString(Constante.EXTRA_PARAM_COULEUR_POLICETITRE, param.getCouleur_policeTitre());
+		parametreBundle.putString(Constante.EXTRA_PARAM_COULEUR_POLICE, param.getCouleur_police());
+		parametreBundle.putString(Constante.EXTRA_PARAM_COULEUR_BOUTON, param.getCouleur_bouton());
+		parametreBundle.putString(Constante.EXTRA_PARAM_COULEUR_THEME1, param.getCouleur_theme1());
+		parametreBundle.putString(Constante.EXTRA_PARAM_COULEUR_THEME2, param.getCouleur_theme2());
+		parametreBundle.putString(Constante.EXTRA_PARAM_COULEUR_THEME3, param.getCouleur_theme3());
+		parametreBundle.putString(Constante.EXTRA_PARAM_COULEUR_THEME4, param.getCouleur_theme4());
+		parametreBundle.putString(Constante.EXTRA_PARAM_COULEUR_THEME5, param.getCouleur_theme5());
+		parametreBundle.putString(Constante.EXTRA_PARAM_COULEUR_THEME6, param.getCouleur_theme6());
+		parametreBundle.putString(Constante.EXTRA_PARAM_COULEUR_THEME7, param.getCouleur_theme7());
+		parametreBundle.putString(Constante.EXTRA_PARAM_TITREAPPLICATION, param.getTitreApplication());
+		parametreBundle.putString(Constante.EXTRA_PARAM_LOGO, param.getLogo());
+		
+		intent.putExtra(Constante.EXTRA_EVENEMENT, evenementBundle);
+		intent.putExtra(Constante.EXTRA_PARAMETRE, parametreBundle);
+		
+		startActivity(intent);
+		finish();
+	}
 }

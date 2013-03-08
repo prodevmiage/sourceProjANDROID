@@ -12,7 +12,7 @@ public class Evenement {
 	private int id;
 	private String nom;
 	private String description;
-	//si la valeur de publication = 1, l'évènement doit être publié
+	//si la valeur de publication = 1, l'evenement doit etre publie
 	//si la valeur de publication = 0 on ne le publie pas
 	private int publication;
 	private int idTypeEvt;

@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.miage.projetandroid.model.Parametre;
 
 public class ParametreController extends WebService{
-	//variable contenant l'url sur laquelle on a déposé notre fichier
+	//variable contenant l'url sur laquelle on a d√©pos√© notre fichier
 	private static final String DL_URL_PARAMETRE = "http://prodevmiage.netii.net/BaseDonnees/reglages.json";
 	
 	public String contenuFic = "";

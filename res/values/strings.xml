@@ -4,5 +4,6 @@
     <string name="app_name">Culture et tourisme</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Paramètres</string>
+    <string name="title_activity_fiche_desc_evenement">FicheDescEvenementActivity</string>
 
 </resources>

@@ -55,7 +55,7 @@ public class Parametre {
 			String couleur_theme2, String couleur_theme3,
 			String couleur_theme4, String couleur_theme5,
 			String couleur_theme6, String couleur_theme7,
-			String titreApplication, String logo, Parametre param) {
+			String titreApplication, String logo) {
 		super();
 		this.fontTitre = fontTitre;
 		this.fontTexte = fontTexte;

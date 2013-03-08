@@ -28,26 +28,12 @@
 
             <TextView
                 android:id="@+id/titre_application"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:textStyle="bold"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="Large Text" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical" >
-
-                <ImageButton
-                    android:id="@+id/boutonHome"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:src="@drawable/ic_menu_home" />
-
-            </LinearLayout>
+                android:text="Large Text"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -68,11 +54,11 @@
                 android:layout_height="match_parent"
                 android:gravity="right|center_vertical" >
 
-                <ToggleButton
-                    android:id="@+id/boutonHorsLigne"
+                <ImageButton
+                    android:id="@+id/boutonHome"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:text="ToggleButton" />
+                    android:src="@drawable/ic_menu_home" />
 
             </LinearLayout>
 
