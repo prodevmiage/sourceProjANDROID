@@ -32,6 +32,14 @@
             android:name="com.miage.projetandroid.activity.FicheDescEvenementActivity"
             android:label="@string/title_activity_fiche_desc_evenement" >
         </activity>
+        <activity
+            android:name="com.miage.projetandroid.activity.ResultatRechercheActivity"
+            android:label="@string/title_activity_resultat_recherche" >
+        </activity>
+        <activity
+            android:name="com.miage.projetandroid.activity.RechercheActivity"
+            android:label="@string/title_activity_recherche" >
+        </activity>
     </application>
 
 </manifest>

@@ -5,5 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Paramètres</string>
     <string name="title_activity_fiche_desc_evenement">FicheDescEvenementActivity</string>
+    <string name="title_activity_recherche">RechercheActivity</string>
+    <string name="title_activity_resultat_recherche">ResultatRechercheActivity</string>
+        
 
 </resources>

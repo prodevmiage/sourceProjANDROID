@@ -10,6 +10,7 @@ import com.miage.projetandroid.model.Parametre;
 import com.miage.projetandroid.persistance.ParametreController;
 import com.miage.projetandroid.util.Constante;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -49,6 +50,10 @@ public class FicheDescEvenementActivity extends Activity {
 	 private LinearLayout layoutFicheDesc_InfoPratiqueEvt;
 	 private TextView TV_FD_natureEvt;
 	 private TextView TV_FD_tarifEvt;
+	 private TextView TV_FD_telephone;
+	 private TextView TV_FD_email;
+	 private TextView TV_FD_siteweb;
+
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +72,10 @@ public class FicheDescEvenementActivity extends Activity {
 		TV_FD_descEvt = (TextView) findViewById(R.id.TV_FD_descEvt);
 		IV_FD_photo = (ImageView) findViewById(R.id.IV_FD_photo);
 	    layoutFicheDesc_boutonLink = (LinearLayout) findViewById(R.id.layoutFicheDesc_boutonLink);
-		/*BTN_FD_telephone = (Button) findViewById(R.id.BTN_FD_telephone);
-		BTN_FD_mail = (Button) findViewById(R.id.BTN_FD_mail);
-		BTN_FD_siteWeb = (Button) findViewById(R.id.BTN_FD_siteWeb);
-		*/layoutFicheDesc_ComplementEvt = (LinearLayout) findViewById(R.id.layoutFicheDesc_ComplementEvt);
+	    TV_FD_telephone = (TextView) findViewById(R.id.TV_FD_telephone);
+	    TV_FD_email = (TextView) findViewById(R.id.TV_FD_email);
+	    TV_FD_siteweb = (TextView) findViewById(R.id.TV_FD_siteweb);		
+		layoutFicheDesc_ComplementEvt = (LinearLayout) findViewById(R.id.layoutFicheDesc_ComplementEvt);
 		TV_FD_infoContact = (TextView) findViewById(R.id.TV_FD_infoContact);
 		TV_FD_InfoPratiquesEvt = (TextView) findViewById(R.id.TV_FD_InfoPratiquesEvt);
 		layoutFicheDesc_InfoPratiqueEvt = (LinearLayout) findViewById(R.id.layoutFicheDesc_InfoPratiqueEvt);
@@ -173,13 +178,27 @@ public class FicheDescEvenementActivity extends Activity {
         boutonHome.setBackgroundColor(Color.parseColor(p.getCouleur_bouton()));
         titre_vueFicheDescEvt.setTextColor(Color.parseColor(p.getCouleur_barreTitre()));
         titre_vueFicheDescEvt.setTextSize(p.getTaillePoliceTitre()-2);
+        TV_FD_telephone.setTextColor(Color.parseColor("#1E7FCB"));
+        TV_FD_email.setTextColor(Color.parseColor("#1E7FCB"));
+        TV_FD_siteweb.setTextColor(Color.parseColor("#1E7FCB"));
+
   	}
   	
 	private void remplirChampsFicheDescEvt(Evenement evenementSelect) {
 		TV_FD_nomEvt.setText(evenementSelect.getNom());
 		TV_FD_descEvt.setText(evenementSelect.getDescription());
 		//type evenement
-		//if(evenementSelect.getIdTypeEvt() == )
+		if(evenementSelect.getIdTypeEvt() != 6 && evenementSelect.getIdTypeEvt() != 7){
+			layoutFicheDesc_ComplementEvt.setVisibility(layoutFicheDesc_ComplementEvt.VISIBLE);
+			TV_FD_infoContact.setText(evenementSelect.getInfoContact());
+			TV_FD_telephone.setText(evenementSelect.getContact_tel());
+			TV_FD_email.setText(evenementSelect.getContact_mail());
+			TV_FD_siteweb.setText(evenementSelect.getWeb());
+			TV_FD_natureEvt.setText(evenementSelect.getNature());
+			TV_FD_tarifEvt.setText(evenementSelect.getTarif()+" euros.");
+		}else{
+			layoutFicheDesc_ComplementEvt.setVisibility(layoutFicheDesc_ComplementEvt.GONE);
+		}
 		
 	}
 

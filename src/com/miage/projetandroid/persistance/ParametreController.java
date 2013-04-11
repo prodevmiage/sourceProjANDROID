@@ -12,7 +12,7 @@ import com.miage.projetandroid.model.Parametre;
 
 public class ParametreController extends WebService{
 	//variable contenant l'url sur laquelle on a déposé notre fichier
-	private static final String DL_URL_PARAMETRE = "http://prodevmiage.netii.net/BaseDonnees/reglages.json";
+	private static final String DL_URL_PARAMETRE = "http://ftpaurelie.onlyonenooz.net/BaseDonnees/reglages.json";
 	
 	public String contenuFic = "";
 	

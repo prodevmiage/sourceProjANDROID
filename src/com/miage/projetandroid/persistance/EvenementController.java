@@ -13,7 +13,7 @@ import com.miage.projetandroid.model.Evenement;
 
 public class EvenementController extends WebService{
     
-	private static final String DL_URL_EVENEMENTS = "http://prodevmiage.netii.net/BaseDonnees/evenements.json";
+	private static final String DL_URL_EVENEMENTS = "http://ftpaurelie.onlyonenooz.net/BaseDonnees/evenements.json";
 
 	public String contenuFic = "";
 	

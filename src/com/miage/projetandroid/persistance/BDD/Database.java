@@ -1,4 +1,4 @@
-package com.miage.projetandroid.persistance;
+package com.miage.projetandroid.persistance.BDD;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -75,6 +75,15 @@ public class MainActivity extends Activity implements EvenementAdapterListener{
 		boutonHome.setOnClickListener(new OnClickListener() { 
 			public void onClick(View v) { gettingJson(); } 
 		});
+		
+		//bouton rechercher
+		boutonRecherche.setOnClickListener(new OnClickListener() { 
+			public void onClick(View v) {
+				Intent intent=new Intent(MainActivity.this,RechercheActivity.class);
+				startActivity(intent);
+				finish();
+			} 
+		});
 				
 		//lancement de la récupération des données
 		gettingJson();
@@ -101,13 +110,23 @@ public class MainActivity extends Activity implements EvenementAdapterListener{
     
     //fonction qui permet de paramétrer l'application
 	private void parametreComposant(Parametre p) {
+		/*barreTitre.setBackgroundColor(Color.parseColor(p.getCouleur_barreTitre().substring(1, p.getCouleur_barreTitre().length()-2)));
+    	fondEcran.setBackgroundColor(Color.parseColor(p.getCouleur_fond().substring(1, p.getCouleur_fond().length()-2)));
+    	titreApplication.setText(p.getTitreApplication().substring(1, p.getTitreApplication().length()-2));
+        titreApplication.setTextSize(p.getTaillePoliceTitre());
+        titreApplication.setTextColor(Color.parseColor(p.getCouleur_policeTitre().substring(1, p.getCouleur_policeTitre().length()-2)));  
+        boutonHome.setBackgroundColor(Color.parseColor(p.getCouleur_bouton().substring(1, p.getCouleur_bouton().length()-2)));
+        boutonRecherche.setBackgroundColor(Color.parseColor(p.getCouleur_bouton().substring(1, p.getCouleur_bouton().length()-2)));   
+        */ 
+		
 		barreTitre.setBackgroundColor(Color.parseColor(p.getCouleur_barreTitre()));
     	fondEcran.setBackgroundColor(Color.parseColor(p.getCouleur_fond()));
     	titreApplication.setText(p.getTitreApplication());
         titreApplication.setTextSize(p.getTaillePoliceTitre());
         titreApplication.setTextColor(Color.parseColor(p.getCouleur_policeTitre()));  
         boutonHome.setBackgroundColor(Color.parseColor(p.getCouleur_bouton()));
-        boutonRecherche.setBackgroundColor(Color.parseColor(p.getCouleur_bouton()));    
+        boutonRecherche.setBackgroundColor(Color.parseColor(p.getCouleur_bouton()));   
+		
 	}
 	
 	private void gestionAffichageEvenementAlaUne(ArrayList<Evenement> listeEvt) {
