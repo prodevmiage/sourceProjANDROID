@@ -48,7 +48,7 @@ public class RechercheActivity extends Activity {
 	 private ImageView logo1;
 	 private LinearLayout barreTitre1;
 	 private LinearLayout fondEcran1;
-	 private ImageButton boutonHome1;
+	 private ImageButton boutonHome;
 	 private ImageButton boutonRecherche1;
 	 private EditText barreRechercher1;;
 	 private ListView listeViewEvtAlaUne1;
@@ -69,11 +69,11 @@ public class RechercheActivity extends Activity {
 	
 	//Initialisation des composants d'Žcran
 	layoutApplication1 = (LinearLayout) findViewById(R.id.layoutApplication1);
-	titreApplication1 = (TextView) findViewById(R.id.titre_application1);
-	logo1 = (ImageView) findViewById(R.id.logo1);
-	barreTitre1 = (LinearLayout) findViewById(R.id.layoutBarreTitre1);
+	titreApplication1 = (TextView) findViewById(R.id.titre_application);
+	logo1 = (ImageView) findViewById(R.id.logo);
+	barreTitre1 = (LinearLayout) findViewById(R.id.layoutBarreTitre);
 	fondEcran1 = (LinearLayout) findViewById(R.id.layoutApplication1);
-	boutonHome1 = (ImageButton) findViewById(R.id.boutonHome1);
+	boutonHome = (ImageButton) findViewById(R.id.boutonHome_vueRecherche);
 	boutonRecherche1 = (ImageButton) findViewById(R.id.boutonAccesRecherche1);
 	listeViewEvtAlaUne1 = (ListView) findViewById(R.id.listeEvenementUne1);
 	barreRechercher1 = (EditText) findViewById(R.id.barre_rechercher_evenement1);
@@ -87,6 +87,16 @@ public class RechercheActivity extends Activity {
 			gestionAffichageEvenementfiltre(malistetypeEvt, texte);
 
 			} 
+	});
+	
+	//gère l'évènement déclenché au click sur le bouton home
+    // cela provoque la récupération des données et l'affichage de la page home
+	boutonHome.setOnClickListener(new OnClickListener() { 
+		public void onClick(View v) { 
+			Intent intent = new Intent(RechercheActivity.this, MainActivity.class);
+			startActivity(intent);
+			finish();
+		} 
 	});
 	
 	
@@ -150,7 +160,7 @@ public class RechercheActivity extends Activity {
     	titreApplication1.setText(p.getTitreApplication());
         titreApplication1.setTextSize(p.getTaillePoliceTitre());
         titreApplication1.setTextColor(Color.parseColor(p.getCouleur_policeTitre()));  
-        boutonHome1.setBackgroundColor(Color.parseColor(p.getCouleur_bouton()));
+        boutonHome.setBackgroundColor(Color.parseColor(p.getCouleur_bouton()));
         boutonRecherche1.setBackgroundColor(Color.parseColor(p.getCouleur_bouton()));    
 	}
 	

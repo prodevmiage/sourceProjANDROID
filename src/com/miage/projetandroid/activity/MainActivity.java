@@ -62,7 +62,6 @@ public class MainActivity extends Activity implements EvenementAdapterListener{
 		typeEvtController = new TypeEvenementController();
 		
 		//Initialisation des composants d'écran
-		layoutApplication = (LinearLayout) findViewById(R.id.layoutApplication);
 		titreApplication = (TextView) findViewById(R.id.titre_application);
 		logo = (ImageView) findViewById(R.id.logo);
 		barreTitre = (LinearLayout) findViewById(R.id.layoutBarreTitre);

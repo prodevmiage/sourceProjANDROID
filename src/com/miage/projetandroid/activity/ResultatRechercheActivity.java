@@ -84,11 +84,11 @@ public class ResultatRechercheActivity extends Activity {
 	
 	//Initialisation des composants d'Žcran
 	layoutApplication1 = (LinearLayout) findViewById(R.id.layoutApplication1);
-	titreApplication1 = (TextView) findViewById(R.id.titre_application1);
-	logo1 = (ImageView) findViewById(R.id.logo1);
-	barreTitre1 = (LinearLayout) findViewById(R.id.layoutBarreTitre1);
+	titreApplication1 = (TextView) findViewById(R.id.titre_application);
+	logo1 = (ImageView) findViewById(R.id.logo);
+	barreTitre1 = (LinearLayout) findViewById(R.id.layoutBarreTitre);
 	fondEcran1 = (LinearLayout) findViewById(R.id.layoutApplication1);
-	boutonHome1 = (ImageButton) findViewById(R.id.boutonHome1);
+	boutonHome1 = (ImageButton) findViewById(R.id.boutonHome_vueResultRecherche);
 	boutonRecherche1 = (ImageButton) findViewById(R.id.boutonAccesRecherche1);
 	listeViewEvtAlaUne1 = (ListView) findViewById(R.id.listeEvenementUne1);
 	barreRechercher1 = (EditText) findViewById(R.id.barre_rechercher_evenement1);
@@ -101,7 +101,15 @@ public class ResultatRechercheActivity extends Activity {
 	}
 	
 	
-	
+	//gère l'évènement déclenché au click sur le bouton home
+    // cela provoque la récupération des données et l'affichage de la page home
+	boutonHome1.setOnClickListener(new OnClickListener() { 
+		public void onClick(View v) { 
+			Intent intent = new Intent(ResultatRechercheActivity.this, MainActivity.class);
+			startActivity(intent);
+			finish();
+		} 
+	});
 	
 
 	//bouton rechercher

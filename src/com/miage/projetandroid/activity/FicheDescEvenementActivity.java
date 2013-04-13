@@ -1,21 +1,15 @@
 package com.miage.projetandroid.activity;
 
-import java.util.ArrayList;
-
-import org.w3c.dom.Text;
-
 import com.miage.projetandroid.R;
 import com.miage.projetandroid.model.Evenement;
 import com.miage.projetandroid.model.Parametre;
 import com.miage.projetandroid.persistance.ParametreController;
 import com.miage.projetandroid.util.Constante;
 
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.text.Layout;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -61,11 +55,11 @@ public class FicheDescEvenementActivity extends Activity {
 		setContentView(R.layout.activity_fiche_desc_evenement);
 		
 		//Initialisation des composants d'écran
-		titreApplication = (TextView) findViewById(R.id.titre_application2);
-		logo = (ImageView) findViewById(R.id.logo2);
+		titreApplication = (TextView) findViewById(R.id.titre_application);
+		logo = (ImageView) findViewById(R.id.logo);
 		barreTitre = (LinearLayout) findViewById(R.id.layoutBarreTitre2);
 		fondEcran = (LinearLayout) findViewById(R.id.layoutApplication2);
-		boutonHome = (ImageButton) findViewById(R.id.boutonHome2);
+		boutonHome = (ImageButton) findViewById(R.id.boutonHome_vueFicheEvt);
 		layoutBarreTitreFicheEvenement = (LinearLayout) findViewById(R.id.layoutBarreTitreFicheEvenement);
 		titre_vueFicheDescEvt = (TextView) findViewById(R.id.titre_vueFicheDescEvt);
 		TV_FD_nomEvt = (TextView) findViewById(R.id.TV_FD_nomEvt);
@@ -189,7 +183,7 @@ public class FicheDescEvenementActivity extends Activity {
 		TV_FD_descEvt.setText(evenementSelect.getDescription());
 		//type evenement
 		if(evenementSelect.getIdTypeEvt() != 6 && evenementSelect.getIdTypeEvt() != 7){
-			layoutFicheDesc_ComplementEvt.setVisibility(layoutFicheDesc_ComplementEvt.VISIBLE);
+			layoutFicheDesc_ComplementEvt.setVisibility(View.VISIBLE);
 			TV_FD_infoContact.setText(evenementSelect.getInfoContact());
 			TV_FD_telephone.setText(evenementSelect.getContact_tel());
 			TV_FD_email.setText(evenementSelect.getContact_mail());
@@ -197,7 +191,7 @@ public class FicheDescEvenementActivity extends Activity {
 			TV_FD_natureEvt.setText(evenementSelect.getNature());
 			TV_FD_tarifEvt.setText(evenementSelect.getTarif()+" euros.");
 		}else{
-			layoutFicheDesc_ComplementEvt.setVisibility(layoutFicheDesc_ComplementEvt.GONE);
+			layoutFicheDesc_ComplementEvt.setVisibility(View.GONE);
 		}
 		
 	}
