@@ -41,7 +41,11 @@ public class ResultatRechercheActivity extends Activity {
 	 private TextView TV_titreEvt;
 	 private Parametre paramApplication;
 	 private ArrayList<Evenement> malisteEvt;
-	 private String id_evenement;
+	 private String id_typeEvenementChoisi;
+	 private String saisieChampRecherche;
+	 private String nom_typeEvenementChoisi;
+	 private String zoneChoisi;
+	 private int typeRecherche;
 	 private ArrayList<HashMap<String, String>> listeItemResultatRecherche = new ArrayList<HashMap<String, String>>();
 	 private Button boutonRetour;	    
   
@@ -69,16 +73,20 @@ public class ResultatRechercheActivity extends Activity {
 		boutonRetour = (Button) findViewById(id.RESRECH_btnRetourRecherche);
 		LV_listeResultatRecherche = (ListView) findViewById(R.id.RESRECH_listeResultatRecherche);
 		
-		Bundle infoNom = this.getIntent().getExtras();
-		if(infoNom != null){
-			id_evenement = infoNom.getString("id_evenement");
-			TV_titreEvt.setText(infoNom.getString("nom_evenement"));
+		Bundle informationRecherche = this.getIntent().getExtras();
+		if(informationRecherche != null){
+			typeRecherche = informationRecherche.getInt("typeRecherche");
+			saisieChampRecherche = informationRecherche.getString("critereRecherche");
+			id_typeEvenementChoisi = informationRecherche.getString("id_typeEvenement");
+			nom_typeEvenementChoisi = informationRecherche.getString("nom_typeEvenement");
+			zoneChoisi = informationRecherche.getString("zone");
 		}
 		
 		boutonRetour.setOnClickListener(new OnClickListener() { 
 			public void onClick(View v) {
+				Intent intent = new Intent(ResultatRechercheActivity.this, RechercheActivity.class);
 				finish();
-			} 
+				startActivity(intent);			} 
 		});
 		
 		//gère l'évènement déclenché au click sur le bouton home
@@ -134,7 +142,7 @@ public class ResultatRechercheActivity extends Activity {
 		HashMap<String, String> map;
 
 		for(int i = 0; i < listeEvt.size(); i++)
-		if(Integer.toString(listeEvt.get(i).getIdTypeEvt()).equals(id_evenement))
+		if(Integer.toString(listeEvt.get(i).getIdTypeEvt()).equals(id_typeEvenementChoisi))
 		{
 			
 				map = new HashMap<String, String>();

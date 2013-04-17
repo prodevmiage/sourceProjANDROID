@@ -58,72 +58,102 @@ public class RechercheActivity extends Activity {
    	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	setContentView(R.layout.activity_recherche);	
-	
-	 //Initialisation des controllers
-	paramController = new ParametreController();
-	evtController = new EvenementController();
-	zoneController = new ZoneController();
-	typeEvtController = new TypeEvenementController();
-	
-	//Initialisation des composants d'Žcran
-	layoutApplication = (LinearLayout) findViewById(R.id.RECHlayoutApplication);
-	titreApplication = (TextView) findViewById(R.id.RECHtitre_application);
-	logo = (ImageView) findViewById(R.id.RECHlogo);
-	barreTitre = (LinearLayout) findViewById(R.id.RECHlayoutBarreTitre);
-	boutonHome = (ImageButton) findViewById(R.id.boutonHome_vueRecherche);
-	boutonRecherche = (ImageButton) findViewById(R.id.RECHboutonAccesRecherche);
-	listeTypeEvenement = (ListView) findViewById(R.id.RECH_listeTypeEvenement);
-	barreRechercher = (EditText) findViewById(R.id.RECHbarre_rechercher_evenement);
-	
-	//bouton rechercher
-	boutonRecherche.setOnClickListener(new OnClickListener() { 
-		public void onClick(View v) {
-			
-			listeItemTypeEvenement.clear();
-			String texte = barreRechercher.getText().toString();
-			gestionAffichageEvenementfiltre(malistetypeEvt, texte);
-
-		} 
-	});
-	
-	//gère l'évènement déclenché au click sur le bouton home
-    // cela provoque la récupération des données et l'affichage de la page home
-	boutonHome.setOnClickListener(new OnClickListener() { 
-		public void onClick(View v) { 
-			Intent intent = new Intent(RechercheActivity.this, MainActivity.class);
-			finish();
-			startActivity(intent);
-		} 
-	});
-	
-	
-	
-	//lancement de la rŽcupŽration des donnŽes
-			gettingJson();
-			
-			
-			//Enfin on met un écouteur d'évènement sur notre listView
-			listeTypeEvenement.setOnItemClickListener(new OnItemClickListener() {
-		        public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-			        //on récupère la HashMap contenant les infos de notre item (titre, description, img)
-			        HashMap<String, String> map = (HashMap<String, String>) listeTypeEvenement.getItemAtPosition(position);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_recherche);	
+		
+		 //Initialisation des controllers
+		paramController = new ParametreController();
+		evtController = new EvenementController();
+		zoneController = new ZoneController();
+		typeEvtController = new TypeEvenementController();
+		
+		//Initialisation des composants d'Žcran
+		layoutApplication = (LinearLayout) findViewById(R.id.RECHlayoutApplication);
+		titreApplication = (TextView) findViewById(R.id.RECHtitre_application);
+		logo = (ImageView) findViewById(R.id.RECHlogo);
+		barreTitre = (LinearLayout) findViewById(R.id.RECHlayoutBarreTitre);
+		boutonHome = (ImageButton) findViewById(R.id.boutonHome_vueRecherche);
+		boutonRecherche = (ImageButton) findViewById(R.id.RECHboutonAccesRecherche);
+		listeTypeEvenement = (ListView) findViewById(R.id.RECH_listeTypeEvenement);
+		barreRechercher = (EditText) findViewById(R.id.RECHbarre_rechercher_evenement);
+		
+		//bouton rechercher
+		/*boutonRecherche.setOnClickListener(new OnClickListener() { 
+			public void onClick(View v) {		
+				listeItemTypeEvenement.clear();
+				String texte = barreRechercher.getText().toString();
+				gestionAffichageEvenementfiltre(malistetypeEvt, texte);
+			} 
+		});
+		*/
+		boutonRecherche.setOnClickListener(new OnClickListener() {
+		    public void onClick(View v) {
+		    	String champtexte = barreRechercher.getText().toString();
+		    	//si le champs de recherche est vide on affiche un message d'erreur
+		    	if(champtexte.equals("")){
+		    		Toast.makeText(RechercheActivity.this,
+		    				R.string.erreurzoneviderecherche,
+		    				Toast.LENGTH_LONG).show();
+		    	}else{
+		    		//si celui ci est saisie, on appel l'activité qui gère le résultat de la recherche
 			    	Intent intent=new Intent(RechercheActivity.this, ResultatRechercheActivity.class);
-			        //je renvoi l'id de l'element selectionné
-			        for(int i = 0; i <malistetypeEvt.size(); i++)
-			        {
-			        	int id_evt = malistetypeEvt.get(i).getId(); 
-						if (malistetypeEvt.get(i).getNom()==map.get("description")) 
-						{
-							intent.putExtra("id_evenement",Integer.toString(id_evt));
-							intent.putExtra("nom_evenement",malistetypeEvt.get(i).getNom());
-							break;
+					intent.putExtra("typeRecherche", 1);
+			    	intent.putExtra("critereRecherche",champtexte);
+					intent.putExtra("id_typeEvenement","");
+					intent.putExtra("nom_typeEvenement","");
+					intent.putExtra("zone","");
+			    	startActivity(intent);
+			    	finish();
+		    	}
+		      }
+		});
+			
+		
+		//gère l'évènement déclenché au click sur le bouton home
+	    // cela provoque la récupération des données et l'affichage de la page home
+		boutonHome.setOnClickListener(new OnClickListener() { 
+			public void onClick(View v) { 
+				Intent intent = new Intent(RechercheActivity.this, MainActivity.class);
+				finish();
+				startActivity(intent);
+			} 
+		});
+		
+		//lancement de la rŽcupŽration des donnŽes
+		gettingJson();
+		
+		
+		//Enfin on met un écouteur d'évènement sur notre listView
+		listeTypeEvenement.setOnItemClickListener(new OnItemClickListener() {
+		    public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+		    	//on récupère les informations saisies dans la barre de recherche
+		    	String champtexte = barreRechercher.getText().toString();
+		    	//on récupère la HashMap contenant les infos de notre item (titre, description, img)
+		        HashMap<String, String> map = (HashMap<String, String>) listeTypeEvenement.getItemAtPosition(position);
+		    	Intent intent=new Intent(RechercheActivity.this, ResultatRechercheActivity.class);
+		        //je renvoi l'id de l'element selectionné
+		        for(int i = 0; i <malistetypeEvt.size(); i++)
+		        {
+		        	int id_evt = malistetypeEvt.get(i).getId(); 
+					if (malistetypeEvt.get(i).getNom()==map.get("description")) 
+					{
+						intent.putExtra("id_typeEvenement",Integer.toString(id_evt));
+						intent.putExtra("nom_typeEvenement",malistetypeEvt.get(i).getNom());
+						if(!champtexte.equals("")){
+							intent.putExtra("typeRecherche", 3);
+							intent.putExtra("critereRecherche",champtexte);
+						}else{
+							intent.putExtra("typeRecherche", 2);
+							intent.putExtra("critereRecherche","");
 						}
-			        }
-			    	  startActivity(intent);
-			      }
-			});
+						intent.putExtra("zone","");
+						break;
+					}
+		        }
+		    	  startActivity(intent);
+		    	  finish();
+		      }
+		});
 			
 	}
 
@@ -135,7 +165,6 @@ public class RechercheActivity extends Activity {
             public void run() {
             	final Parametre p = paramController.initParametre();
             	final ArrayList<TypeEvenement> listetypeEvt = typeEvtController.initTypeEvenement();
-            	//final String liste = typeEvtController.initTypeEvenement();
             	runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

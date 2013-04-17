@@ -7,6 +7,8 @@
     <string name="title_activity_fiche_desc_evenement">FicheDescEvenementActivity</string>
     <string name="title_activity_recherche">RechercheActivity</string>
     <string name="title_activity_resultat_recherche">ResultatRechercheActivity</string>
+    <string name="erreurzoneviderecherche">Erreur : La zone de recherche est vide !! Merci de saisir quelque chose :-)</string>
+    
         
 
 </resources>
