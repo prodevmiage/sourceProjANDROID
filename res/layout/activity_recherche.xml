@@ -5,42 +5,42 @@
     tools:context=".RechercheActivity" >
 
  <LinearLayout
-        android:id="@+id/layoutApplication1"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical" >
+     android:id="@+id/RECHlayoutApplication"
+     android:layout_width="match_parent"
+     android:layout_height="fill_parent"
+     android:layout_alignParentLeft="true"
+     android:layout_alignParentTop="true"
+     android:orientation="vertical" >
 
         <LinearLayout
-            android:id="@+id/layoutBarreTitre"
+            android:id="@+id/RECHlayoutBarreTitre"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical" >
 
             <ImageView
-                android:id="@+id/logo"
+                android:id="@+id/RECHlogo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_launcher" />
 
             <TextView
-                android:id="@+id/titre_application"
+                android:id="@+id/RECHtitre_application"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="Large Text"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
          <LinearLayout
-            android:id="@+id/layoutBarreTitreRecherche"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left|center_vertical" >
+             android:id="@+id/layoutBarreTitreRecherche"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="5dp"
+             android:gravity="left|center_vertical" >
 
             <ImageButton
                 android:id="@+id/boutonHome_vueRecherche"
@@ -60,21 +60,21 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutBarreRecherche1"
+            android:id="@+id/RECHlayoutBarreRecherche"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
             android:gravity="center_vertical" >
             
-            
             <ImageButton
-                android:id="@+id/boutonAccesRecherche1"
+                android:id="@+id/RECHboutonAccesRecherche"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:src="@android:drawable/ic_search_category_default" />
 
             <EditText
-                android:id="@+id/barre_rechercher_evenement1"
+                android:id="@+id/RECHbarre_rechercher_evenement"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
@@ -84,11 +84,11 @@
         </LinearLayout>
 
         <ListView
-            android:id="@+id/listeEvenementUne1"
+            android:id="@+id/RECH_listeTypeEvenement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp" >
-
+        
         </ListView>
         
      

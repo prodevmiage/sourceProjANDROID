@@ -55,10 +55,10 @@ public class FicheDescEvenementActivity extends Activity {
 		setContentView(R.layout.activity_fiche_desc_evenement);
 		
 		//Initialisation des composants d'écran
-		titreApplication = (TextView) findViewById(R.id.titre_application);
-		logo = (ImageView) findViewById(R.id.logo);
-		barreTitre = (LinearLayout) findViewById(R.id.layoutBarreTitre2);
-		fondEcran = (LinearLayout) findViewById(R.id.layoutApplication2);
+		titreApplication = (TextView) findViewById(R.id.FDEtitre_application);
+		logo = (ImageView) findViewById(R.id.FDElogo);
+		barreTitre = (LinearLayout) findViewById(R.id.FDElayoutBarreTitre);
+		fondEcran = (LinearLayout) findViewById(R.id.FDElayoutApplication);
 		boutonHome = (ImageButton) findViewById(R.id.boutonHome_vueFicheEvt);
 		layoutBarreTitreFicheEvenement = (LinearLayout) findViewById(R.id.layoutBarreTitreFicheEvenement);
 		titre_vueFicheDescEvt = (TextView) findViewById(R.id.titre_vueFicheDescEvt);

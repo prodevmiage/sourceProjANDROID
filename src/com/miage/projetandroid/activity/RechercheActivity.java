@@ -39,22 +39,22 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class RechercheActivity extends Activity {
 	
-	 private LinearLayout layoutApplication1;
+	 private LinearLayout layoutApplication;
 	 private ParametreController paramController;
 	 private EvenementController evtController;
 	 private ZoneController zoneController;
 	 private TypeEvenementController typeEvtController;
-	 private TextView titreApplication1;
-	 private ImageView logo1;
-	 private LinearLayout barreTitre1;
-	 private LinearLayout fondEcran1;
+	 private TextView titreApplication;
+	 private ImageView logo;
+	 private LinearLayout barreTitre;
+	 private LinearLayout fondEcran;
 	 private ImageButton boutonHome;
-	 private ImageButton boutonRecherche1;
-	 private EditText barreRechercher1;;
-	 private ListView listeViewEvtAlaUne1;
+	 private ImageButton boutonRecherche;
+	 private EditText barreRechercher;
+	 private ListView listeTypeEvenement;
 	 private Parametre paramApplication;
 	 private ArrayList<TypeEvenement> malistetypeEvt;
-	 ArrayList<HashMap<String, String>> listItemEvtAlaUne1 = new ArrayList<HashMap<String, String>>();	    
+	 ArrayList<HashMap<String, String>> listeItemTypeEvenement = new ArrayList<HashMap<String, String>>();	    
    	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -68,25 +68,24 @@ public class RechercheActivity extends Activity {
 	typeEvtController = new TypeEvenementController();
 	
 	//Initialisation des composants d'Žcran
-	layoutApplication1 = (LinearLayout) findViewById(R.id.layoutApplication1);
-	titreApplication1 = (TextView) findViewById(R.id.titre_application);
-	logo1 = (ImageView) findViewById(R.id.logo);
-	barreTitre1 = (LinearLayout) findViewById(R.id.layoutBarreTitre);
-	fondEcran1 = (LinearLayout) findViewById(R.id.layoutApplication1);
+	layoutApplication = (LinearLayout) findViewById(R.id.RECHlayoutApplication);
+	titreApplication = (TextView) findViewById(R.id.RECHtitre_application);
+	logo = (ImageView) findViewById(R.id.RECHlogo);
+	barreTitre = (LinearLayout) findViewById(R.id.RECHlayoutBarreTitre);
 	boutonHome = (ImageButton) findViewById(R.id.boutonHome_vueRecherche);
-	boutonRecherche1 = (ImageButton) findViewById(R.id.boutonAccesRecherche1);
-	listeViewEvtAlaUne1 = (ListView) findViewById(R.id.listeEvenementUne1);
-	barreRechercher1 = (EditText) findViewById(R.id.barre_rechercher_evenement1);
+	boutonRecherche = (ImageButton) findViewById(R.id.RECHboutonAccesRecherche);
+	listeTypeEvenement = (ListView) findViewById(R.id.RECH_listeTypeEvenement);
+	barreRechercher = (EditText) findViewById(R.id.RECHbarre_rechercher_evenement);
 	
 	//bouton rechercher
-	boutonRecherche1.setOnClickListener(new OnClickListener() { 
+	boutonRecherche.setOnClickListener(new OnClickListener() { 
 		public void onClick(View v) {
 			
-			listItemEvtAlaUne1.clear();
-			String texte = barreRechercher1.getText().toString();
+			listeItemTypeEvenement.clear();
+			String texte = barreRechercher.getText().toString();
 			gestionAffichageEvenementfiltre(malistetypeEvt, texte);
 
-			} 
+		} 
 	});
 	
 	//gère l'évènement déclenché au click sur le bouton home
@@ -94,8 +93,8 @@ public class RechercheActivity extends Activity {
 	boutonHome.setOnClickListener(new OnClickListener() { 
 		public void onClick(View v) { 
 			Intent intent = new Intent(RechercheActivity.this, MainActivity.class);
-			startActivity(intent);
 			finish();
+			startActivity(intent);
 		} 
 	});
 	
@@ -106,27 +105,24 @@ public class RechercheActivity extends Activity {
 			
 			
 			//Enfin on met un écouteur d'évènement sur notre listView
-			listeViewEvtAlaUne1.setOnItemClickListener(new OnItemClickListener() {
-	        @Override
-	        @SuppressWarnings("unchecked")
-	        public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-		        //on récupère la HashMap contenant les infos de notre item (titre, description, img)
-		        HashMap<String, String> map = (HashMap<String, String>)
-		        listeViewEvtAlaUne1.getItemAtPosition(position);
-		    	Intent intent=new Intent(RechercheActivity.this,ResultatRechercheActivity.class);
-		        //je renvoi l'id de l'element selectionné
-		        for(int i = 0; i <malistetypeEvt.size(); i++)
-		        {
-		        	int id_evt = malistetypeEvt.get(i).getId(); 
-					if (malistetypeEvt.get(i).getNom()==map.get("description")) 
-					{
-						intent.putExtra("id_evenement",Integer.toString(id_evt));
-						intent.putExtra("nom_evenement",malistetypeEvt.get(i).getNom());
-						break;
-					}
-		        }
-		    	  startActivity(intent);
-		      }
+			listeTypeEvenement.setOnItemClickListener(new OnItemClickListener() {
+		        public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+			        //on récupère la HashMap contenant les infos de notre item (titre, description, img)
+			        HashMap<String, String> map = (HashMap<String, String>) listeTypeEvenement.getItemAtPosition(position);
+			    	Intent intent=new Intent(RechercheActivity.this, ResultatRechercheActivity.class);
+			        //je renvoi l'id de l'element selectionné
+			        for(int i = 0; i <malistetypeEvt.size(); i++)
+			        {
+			        	int id_evt = malistetypeEvt.get(i).getId(); 
+						if (malistetypeEvt.get(i).getNom()==map.get("description")) 
+						{
+							intent.putExtra("id_evenement",Integer.toString(id_evt));
+							intent.putExtra("nom_evenement",malistetypeEvt.get(i).getNom());
+							break;
+						}
+			        }
+			    	  startActivity(intent);
+			      }
 			});
 			
 	}
@@ -151,17 +147,17 @@ public class RechercheActivity extends Activity {
             }
         };
         checkUpdate.start();
-        }
+    }
     
     //fonction qui permet de param�trer l'application
 	private void parametreComposant(Parametre p) {
-		barreTitre1.setBackgroundColor(Color.parseColor(p.getCouleur_barreTitre()));
-    	fondEcran1.setBackgroundColor(Color.parseColor(p.getCouleur_fond()));
-    	titreApplication1.setText(p.getTitreApplication());
-        titreApplication1.setTextSize(p.getTaillePoliceTitre());
-        titreApplication1.setTextColor(Color.parseColor(p.getCouleur_policeTitre()));  
+		barreTitre.setBackgroundColor(Color.parseColor(p.getCouleur_barreTitre()));
+    	layoutApplication.setBackgroundColor(Color.parseColor(p.getCouleur_fond()));
+    	titreApplication.setText(p.getTitreApplication());
+        titreApplication.setTextSize(p.getTaillePoliceTitre());
+        titreApplication.setTextColor(Color.parseColor(p.getCouleur_policeTitre()));  
         boutonHome.setBackgroundColor(Color.parseColor(p.getCouleur_bouton()));
-        boutonRecherche1.setBackgroundColor(Color.parseColor(p.getCouleur_bouton()));    
+        boutonRecherche.setBackgroundColor(Color.parseColor(p.getCouleur_bouton()));    
 	}
 	
 	
@@ -170,20 +166,44 @@ private void gestionAffichage(ArrayList<TypeEvenement> listetypeEvt) {
 		HashMap<String, String> map;
 
 		for(int i = 0; i < listetypeEvt.size(); i++){
-			
 				map = new HashMap<String, String>();
-				map.put("titre", "");
-				map.put("description", listetypeEvt.get(i).getNom());
-				listItemEvtAlaUne1.add(map);
+				map.put("titre", listetypeEvt.get(i).getNom());
+				switch (listetypeEvt.get(i).getId()){
+				case 1 :
+					map.put("img", String.valueOf(R.drawable.ic_restaurant));
+					break;
+				case 2 :
+					map.put("img", String.valueOf(R.drawable.ic_location));
+					break;
+				case 3 :
+					map.put("img", String.valueOf(R.drawable.ic_hebergement));
+					break;
+				case 4 :
+					map.put("img", String.valueOf(R.drawable.ic_activite));
+					break;
+				case 5 :
+					map.put("img", String.valueOf(R.drawable.ic_siteculturel));
+					break;
+				case 6 :
+					map.put("img", String.valueOf(R.drawable.ic_actualite));
+					break;
+				case 7 :
+					map.put("img", String.valueOf(R.drawable.ic_infopratique));
+					break;
+				default :
+					map.put("img", String.valueOf(R.drawable.ic_launcher));
+					break;
+				}
+				listeItemTypeEvenement.add(map);
 		}
 		
 		//CrŽation d'un SimpleAdapter qui se chargera de mettre les items prŽsents dans notre list (listItem) dans la vue
-		SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), listItemEvtAlaUne1,
-				R.layout.affichageitemhome,	new String[] {"titre", "description"}, 
-				new int[] {R.id.titre, R.id.description});
+		SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), listeItemTypeEvenement,
+				R.layout.affichageitemrecherche,	new String[] {"img","titre"}, 
+				new int[] {R.id.imgTypeEvenement, R.id.titreTypeEvenement});
 	
 		//On attribue ˆ notre listView l'adapter que l'on vient de crŽer
-		listeViewEvtAlaUne1.setAdapter(mSchedule);
+		listeTypeEvenement.setAdapter(mSchedule);
 		
 	}
 
@@ -194,25 +214,22 @@ private void gestionAffichage(ArrayList<TypeEvenement> listetypeEvt) {
 		
 		//liste Žv�nement ˆ afficher, on parcours la liste des Žv�nements et on affiche uniquement les actualitŽs
 		for(int i = 0; i < listetypeEvt.size(); i++){
-			//if(listeEvt.get(i).getIdTypeEvt()==6){
 				//CrŽation d'une HashMap pour insŽrer les informations du premier item de notre listView
-	
 				if (listetypeEvt.get(i).getNom().indexOf(texte,0)!=-1)
 				{
 					map = new HashMap<String, String>();
 					map.put("titre", "");
 					map.put("description", listetypeEvt.get(i).getNom());
-				listItemEvtAlaUne1.add(map);
+					listeItemTypeEvenement.add(map);
 				}
-			//}
 		}
 		//CrŽation d'un SimpleAdapter qui se chargera de mettre les items prŽsents dans notre list (listItem) dans la vue
-		SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), listItemEvtAlaUne1,
+		SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), listeItemTypeEvenement,
 				R.layout.affichageitemhome,	new String[] {"titre", "description"}, 
-				new int[] {R.id.titre, R.id.description});
+				new int[] {R.id.titre_item_evt_home, R.id.description_item_evt_home});
 	
 		//On attribue ˆ notre listView l'adapter que l'on vient de crŽer
-		listeViewEvtAlaUne1.setAdapter(mSchedule);
+		listeTypeEvenement.setAdapter(mSchedule);
 	}
 
 	@Override

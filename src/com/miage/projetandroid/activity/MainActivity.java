@@ -62,12 +62,12 @@ public class MainActivity extends Activity implements EvenementAdapterListener{
 		typeEvtController = new TypeEvenementController();
 		
 		//Initialisation des composants d'écran
-		titreApplication = (TextView) findViewById(R.id.titre_application);
-		logo = (ImageView) findViewById(R.id.logo);
-		barreTitre = (LinearLayout) findViewById(R.id.layoutBarreTitre);
-		fondEcran = (LinearLayout) findViewById(R.id.layoutApplication);
-		boutonHome = (ImageButton) findViewById(R.id.boutonHome);
-		boutonRecherche = (ImageButton) findViewById(R.id.boutonAccesRecherche);
+		titreApplication = (TextView) findViewById(R.id.Mtitre_application);
+		logo = (ImageView) findViewById(R.id.Mlogo);
+		barreTitre = (LinearLayout) findViewById(R.id.MlayoutBarreTitre);
+		fondEcran = (LinearLayout) findViewById(R.id.MlayoutApplication);
+		boutonHome = (ImageButton) findViewById(R.id.MboutonHome);
+		boutonRecherche = (ImageButton) findViewById(R.id.MboutonAccesRecherche);
 		
 		//gère l'évènement déclenché au click sur le bouton home
 	    // cela provoque la récupération des données et l'affichage de la page home
@@ -144,7 +144,7 @@ public class MainActivity extends Activity implements EvenementAdapterListener{
 	    adapter.addListener(this);
 		
 	    //Récupération du composant ListView
-		listeViewEvtAlaUne = (ListView) findViewById(R.id.listeEvenementUne);
+		listeViewEvtAlaUne = (ListView) findViewById(R.id.MlisteEvenementUne);
 	        
 	    //Initialisation de la liste avec les données
 		listeViewEvtAlaUne.setAdapter(adapter);
